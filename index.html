@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TherapyVerse</title>
+    <style>
+        /* Add custom styles here */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('assets/therapy.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .transparent-box {
+            background-color: rgba(0, 0, 0, 0.521);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        .btn-proceed {
+            background-color: #cc9c00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            animation: pulse 1.5s infinite alternate;
+        }
+        .btn-proceed-text{
+            text-decoration: none;
+            color: white;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="transparent-box">
+        <h1>Welcome to TherapyVerse</h1>
+        <p>Your metaverse therapy</p>
+        <button class="btn-proceed"><a href="menu.html" class="btn-proceed-text">Proceed >> </button>
+    </div>
+</body>
+</html>

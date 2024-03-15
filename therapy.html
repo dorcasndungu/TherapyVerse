@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Therapy Room</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <!-- Environment -->
+    <a-sky color="#cce0ff"></a-sky>
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#66cc99"></a-plane>
+
+    <!-- Table and Chairs -->
+    <a-entity position="0 0 -5">
+      <!-- Table -->
+      <a-box position="0 0 0" width="2" height="0.1" depth="1" color="#663300"></a-box>
+
+      <!-- Chairs -->
+      <a-entity position="-1.5 0 0">
+        <a-box position="0 0 -0.5" width="0.1" height="1" depth="0.1" color="#663300"></a-box>
+        <a-box position="0 0 0.5" width="0.1" height="1" depth="0.1" color="#663300"></a-box>
+      </a-entity>
+
+      <a-entity position="1.5 0 0" rotation="0 180 0">
+        <a-box position="0 0 -0.5" width="0.1" height="1" depth="0.1" color="#663300"></a-box>
+        <a-box position="0 0 0.5" width="0.1" height="1" depth="0.1" color="#663300"></a-box>
+      </a-entity>
+    </a-entity>
+
+    <!-- User -->
+    <a-entity camera position="0 1.6 0" look-controls>
+      <a-cursor></a-cursor>
+    </a-entity>
+
+    <!-- Therapist -->
+    <a-entity id="therapist" position="0 0 -6" rotation="0 180 0" scale="0.7 0.7 0.7">
+      <a-box position="0 1 0" width="1.5" height="2" depth="1" color="#ffcc00"></a-box>
+      <a-entity position="0 2.5 0">
+        <a-text value="Therapist" color="#000" align="center" width="6"></a-text>
+      </a-entity>
+    </a-entity>
+
+    <!-- Navigation -->
+    <a-entity id="teleport" position="3 0 0">
+      <a-box color="#0077cc" position="0 0 0" depth="1" height="1" width="1" visible="false">
+        <a-entity position="0 0.1 0">
+          <a-text value="Teleport" align="center"></a-text>
+        </a-entity>
+      </a-box>
+      <a-cylinder position="0 0 0" height="2" radius="1" color="#0077cc" rotation="-90 0 0"></a-cylinder>
+    </a-entity>
+
+    <!-- Interaction -->
+    <a-entity id="interaction">
+      <a-event-proxy event="click"></a-event-proxy>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    AFRAME.registerComponent('teleport-listener', {
+      init: function () {
+        var teleportButton = document.querySelector('#teleport');
+
+        teleportButton.addEventListener('click', function () {
+          var user = document.querySelector('[camera]');
+          user.setAttribute('position', this.getAttribute('position'));
+        });
+      }
+    });
+
+    AFRAME.registerComponent('sit-down', {
+      init: function () {
+        var self = this;
+
+        this.el.addEventListener('click', function () {
+          var user = document.querySelector('[camera]');
+          var therapist = document.querySelector('#therapist');
+          var distance = user.object3D.position.distanceTo(therapist.object3D.position);
+
+          if (distance < 3) { // Check if user is close enough to the therapist
+            user.setAttribute('position', { x: therapist.object3D.position.x, y: therapist.object3D.position.y, z: therapist.object3D.position.z - 1.5 });
+          } else {
+            console.log('You are too far from the therapist to sit down.');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
